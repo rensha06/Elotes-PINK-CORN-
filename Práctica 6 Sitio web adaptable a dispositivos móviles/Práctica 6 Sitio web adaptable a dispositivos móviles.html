@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Guía Práctica 6 · Sitio Web Adaptable | Diseño Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #f0ebe6;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .guia-maestra {
+            max-width: 1300px;
+            width: 100%;
+            background: #fffcf9;
+            border-radius: 3rem 3rem 2rem 2rem;
+            box-shadow: 0 25px 40px -15px #6b4f40;
+            overflow: hidden;
+            border: 1px solid #ebd5c2;
+        }
+
+        /* Header institucional (misma identidad visual) */
+        .encabezado-planeacion {
+            background: linear-gradient(145deg, #3a5e4c 0%, #2b7555 100%);
+            padding: 1.8rem 2.5rem;
+            color: white;
+            border-bottom: 6px solid #f7b977;
+        }
+        .encabezado-planeacion h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .encabezado-planeacion .sello {
+            background: #f4d03f;
+            color: #1e4a3d;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .datos-destacados {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem 3rem;
+            margin-top: 1rem;
+            font-size: 1.15rem;
+            background: rgba(255,250,240,0.15);
+            padding: 1rem 1.8rem;
+            border-radius: 50px;
+            backdrop-filter: blur(3px);
+        }
+        .contenido-interior {
+            padding: 2.5rem 2.8rem;
+        }
+        .seccion-teorica {
+            background: #f7f0e8;
+            border-radius: 2rem;
+            padding: 1.8rem 2.2rem;
+            margin-bottom: 2.5rem;
+            border-left: 12px solid #e67e22;
+            box-shadow: 0 8px 0 #d4b9a5;
+        }
+        .seccion-teorica h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1f6e51;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .badge-progresion {
+            background: #138d75;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        .bloque-con-codigo {
+            background: #ffffffd4;
+            border-radius: 2rem;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0 2.2rem;
+            border: 2px solid #fadbc8;
+            box-shadow: 0 10px 0 #e2c7b5;
+        }
+        .toolbar-copy {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        .btn-copy {
+            background: #4f7a5c;
+            border: none;
+            color: white;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 4px 0 #2b4d37;
+            font-size: 0.95rem;
+            border: 1px solid #a6c7b2;
+        }
+        .btn-copy:hover {
+            background: #3f624a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #2b4d37;
+        }
+        .pre-codigo {
+            background: #1e1e2f;
+            color: #f8f8f2;
+            border-radius: 24px;
+            padding: 1.4rem 1.8rem;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border-left: 12px solid #f39c12;
+            box-shadow: inset 0 0 12px #00000055;
+        }
+
+        /* Tarjetas para conceptos clave */
+        .grid-conceptos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            background: #eaddd2;
+            border-radius: 50px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+        .chip-concepto {
+            background: white;
+            border-radius: 40px;
+            padding: 0.7rem 1.2rem;
+            font-weight: 500;
+            box-shadow: 0 3px 0 #b3927e;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .footer-perso {
+            background: #cfb9ab;
+            padding: 1.5rem 2.8rem;
+            text-align: center;
+            color: #2a4c3d;
+            font-weight: 500;
+        }
+        .copy-confirm {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: #1f4d3d;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 5px 15px black;
+            opacity: 0; transition: 0.2s;
+            pointer-events: none;
+        }
+        .btn-copy.big {
+            font-size: 1.2rem; padding: 1rem 2rem;
+        }
+        hr { border: 2px dotted #e7cbb8; margin: 2rem 0; }
+
+        .destacar-prop {
+            background: #fdebd0;
+            border-radius: 30px;
+            padding: 0.2rem 1rem;
+            font-family: monospace;
+            font-weight: bold;
+            color: #c45d2c;
+        }
+
+        /* Simulación visual responsiva */
+        .demo-responsivo {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 3px solid #b36843;
+        }
+        .demo-flex {
+            display: flex;
+            flex-wrap: wrap;
+            background: #e9dbd1;
+            padding: 1rem;
+            border-radius: 30px;
+        }
+        .demo-content { flex: 1 1 100%; background: #d4edda; padding: 1rem; border-radius: 20px; }
+        .demo-side { flex: 1 1 100%; background: #d1ecf1; padding: 1rem; border-radius: 20px; margin-top: 10px; }
+        @media (min-width: 700px) {
+            .demo-content { flex: 3; margin-right: 10px; }
+            .demo-side { flex: 1; margin-top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="guia-maestra" id="guiaPrincipal">
+
+        <!-- ENCABEZADO PERSONALIZADO (mismos datos de planeación) -->
+        <div class="encabezado-planeacion">
+            <h1>
+                <span>📱 Práctica 6 · Sitio Web Adaptable</span>
+                <span class="sello">MÓDULO IV · Páginas WEB</span>
+            </h1>
+            <div class="datos-destacados">
+                <span><strong>Docente:</strong> JOSÉ HUIDOBRO ESPEJEL</span>
+                <span><strong>Semestre:</strong> SEXTO (601-602)</span>
+                <span><strong>Ciclo:</strong> 2026A · 17 feb - 24 abr</span>
+                <span><strong>Grupos:</strong> 601 Y 602</span>
+            </div>
+        </div>
+
+        <div class="contenido-interior">
+
+            <!-- SECCIÓN TEÓRICA: ENCUADRE CON PROGRESIONES Y SITUACIÓN DIDÁCTICA -->
+            <div class="seccion-teorica">
+                <h2>🌱 &nbsp; Encuadre didáctico · "Poniendo en línea mis raíces"</h2>
+                <p><span class="badge-progresion">CULTURA DIGITAL</span> <strong>Progresión:</strong> Desarrolla sitios web dinámicos utilizando HTML, CSS, PHP, JavaScript y MySQL para la gestión y visualización de información institucional. </p>
+                <p style="margin-top: 12px;"><span class="badge-progresion">SITUACIÓN DIDÁCTICA</span> <strong>"Poniendo en línea mis raíces":</strong>  En esta <strong>Práctica 6</strong> transformarás tu sitio en una web <strong>adaptable (responsiva)</strong> utilizando <span class="destacar-prop">viewport</span>, <span class="destacar-prop">Flexbox</span> y <span class="destacar-prop">Media Queries</span>. El sitio debe verse perfecto en móviles, tablets y computadoras.</p>
+                <div style="margin-top: 18px; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div style="background: #c1b2a6; padding: 0.5rem 1.5rem; border-radius: 30px;"><strong>📌 Categoría central:</strong> Diseño responsivo con Flexbox</div>
+                    <div style="background: #c1b2a6; padding: 0.5rem 1.5rem; border-radius: 30px;"><strong>🎨 Saber:</strong> viewport, flex-wrap, media queries</div>
+                    <div style="background: #c1b2a6; padding: 0.5rem 1.5rem; border-radius: 30px;"><strong>🛠️ Saber hacer:</strong> crear 3 páginas vinculadas con al menos 5 elementos multimedia</div>
+                </div>
+            </div>
+
+            <!-- DEMOSTRACIÓN VISUAL RESPONSIVA -->
+            <div class="demo-responsivo">
+                <h3>🖥️ → 📱 Vista previa del comportamiento responsivo</h3>
+                <p><small>Redimensiona esta ventana o mira el ejemplo: el contenido principal y la barra lateral se apilan en móvil y se colocan en fila en escritorio.</small></p>
+                <div class="demo-flex">
+                    <div class="demo-content"><strong>Contenido principal</strong> (imágenes, texto)</div>
+                    <div class="demo-side"><strong>Barra lateral</strong> (noticias, promociones)</div>
+                </div>
+                <p style="margin-top: 0.5rem;">✨ Así funcionará tu sitio gracias a <code>flex-wrap</code> y <code>@media</code>.</p>
+            </div>
+
+            <!-- REQUERIMIENTOS PREVIOS -->
+            <div class="bloque-con-codigo">
+                <h3 style="font-size: 1.8rem;">📁 1. Estructura de archivos requerida</h3>
+                <div style="background: #eaddd2; border-radius: 50px; padding: 1.5rem;">
+                    <pre style="font-family: monospace; font-size: 1.2rem;">
+📂 sitio-responsivo/
+├── 📄 index.html
+├── 📄 productos.html
+├── 📄 contacto.html
+├── 🎨 reglas.css
+├── 📂 img/
+│   ├── artesania1.jpg
+│   ├── artesania2.jpg
+│   ├── video.mp4 (opcional)
+│   └── ... (más imágenes, mínimo 5 multimedia en total)
+                    </pre>
+                </div>
+                <p style="margin-top: 1rem;"><strong>Requisito:</strong> Al menos <span class="destacar-prop">5 elementos multimedia</span> (imágenes, videos o audios) distribuidos en las tres páginas.</p>
+            </div>
+
+            <!-- CÓDIGO HTML BASE (index.html) con botón copiar -->
+            <div class="bloque-con-codigo" id="bloque-html">
+                <div class="toolbar-copy">
+                    <button class="btn-copy" data-target="codigo-html">📋 Copiar HTML base (index.html)</button>
+                </div>
+                <h3 style="font-size: 1.8rem;">📝 index.html (plantilla base)</h3>
+                <p><em>Este código debe repetirse en <code>productos.html</code> y <code>contacto.html</code>, cambiando solo el contenido central.</em></p>
+                <div class="pre-codigo" id="codigo-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;!-- ETIQUETA PRIMORDIAL para adaptabilidad móvil --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Artesanías "Don Pepe" - Responsivo&lt;/title&gt;
+    &lt;link rel="stylesheet" href="reglas.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header class="header"&gt;
+        &lt;h1&gt;Poniendo en Línea mis Raíces&lt;/h1&gt;
+    &lt;/header&gt;
+
+    &lt;nav class="navbar"&gt;
+        &lt;ul class="menu"&gt;
+            &lt;li&gt;&lt;a href="index.html"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="productos.html"&gt;Productos&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="contacto.html"&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+
+    &lt;main class="contenedor-principal"&gt;
+        &lt;section class="contenido"&gt;
+            &lt;h2&gt;Bienvenido a nuestro taller&lt;/h2&gt;
+            &lt;p&gt;Productos elaborados a mano con identidad regional.&lt;/p&gt;
+            &lt;!-- Elementos multimedia (ejemplo de 2 imágenes) --&gt;
+            &lt;img src="img/artesania1.jpg" alt="Producto 1" class="img-fluida"&gt;
+            &lt;img src="img/artesania2.jpg" alt="Producto 2" class="img-fluida"&gt;
+        &lt;/section&gt;
+
+        &lt;aside class="lateral"&gt;
+            &lt;h3&gt;Noticias&lt;/h3&gt;
+            &lt;p&gt;Nuevos diseños disponibles este mes.&lt;/p&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    &lt;footer class="pie"&gt;
+        &lt;p&gt;&amp;copy; 2026 Emprendimiento Local&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                </div>
+                <p style="margin-top: 8px;">🔁 Recuerda: en <code>productos.html</code> y <code>contacto.html</code> cambia el contenido de <code>.contenido</code> y <code>.lateral</code> para que sean diferentes.</p>
+            </div>
+
+            <!-- CÓDIGO CSS RESPONSIVO (reglas.css) con botón copiar -->
+            <div class="bloque-con-codigo" id="bloque-css">
+                <div class="toolbar-copy">
+                    <button class="btn-copy" data-target="codigo-css">📋 Copiar CSS responsivo (reglas.css)</button>
+                </div>
+                <h3 style="font-size: 1.8rem;">🎨 reglas.css (Mobile First + Media Queries)</h3>
+                <div class="pre-codigo" id="codigo-css">
+/* ===== ESTILOS GENERALES (BASE MÓVIL) ===== */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f4f4f4; 
+}
+
+/* Encabezado y pie */
+.header, .pie { 
+    background-color: #333; 
+    color: white; 
+    text-align: center; 
+    padding: 20px; 
+}
+
+/* Barra de navegación */
+.navbar { 
+    background-color: #800020; 
+}
+.menu { 
+    list-style: none; 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+.menu li a { 
+    color: white; 
+    text-decoration: none; 
+    padding: 15px; 
+    display: block; 
+}
+.menu li a:hover {
+    background-color: #a04040;
+    transition: 0.3s;
+}
+
+/* Contenedor principal FLEXIBLE */
+.contenedor-principal {
+    display: flex;
+    flex-wrap: wrap; /* EN MÓVIL: SE APILAN */
+    padding: 10px;
+}
+
+.contenido { 
+    flex: 1 1 100%; /* OCUPA 100% EN MÓVIL */
+    padding: 10px; 
+    background: white; 
+}
+
+.lateral { 
+    flex: 1 1 100%; /* OCUPA 100% EN MÓVIL */
+    padding: 10px; 
+    background: #ddd; 
+}
+
+/* Imágenes fluidas (nunca se desbordan) */
+.img-fluida { 
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 8px; 
+    margin: 10px 0;
+}
+
+/* ===== MEDIA QUERY PARA TABLETS Y ESCRITORIO (pantallas > 700px) ===== */
+@media (min-width: 700px) {
+    .contenedor-principal {
+        flex-wrap: nowrap; /* ESCRITORIO: UNO AL LADO DEL OTRO */
+    }
+    
+    .contenido {
+        flex: 3; /* Ocupa 3/4 del espacio */
+        margin-right: 10px;
+    }
+    
+    .lateral {
+        flex: 1; /* Ocupa 1/4 del espacio */
+    }
+}
+
+/* Ajustes adicionales para pantallas muy grandes */
+@media (min-width: 1200px) {
+    .contenedor-principal {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+                </div>
+                <p>✅ <span class="destacar-prop">viewport</span>, <span class="destacar-prop">flex-wrap</span> y <span class="destacar-prop">@media</span> son los protagonistas.</p>
+            </div>
+
+            <!-- LISTA DE REQUISITOS MULTIMEDIA -->
+            <div style="background: #e6d5c7; border-radius: 40px; padding: 1.5rem; margin: 2rem 0;">
+                <h3>🖼️ Requisito multimedia: al menos 5 elementos</h3>
+                <p>Distribúyelos entre las tres páginas. Ejemplo:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                    <span class="chip-concepto">📸 2 imágenes en inicio</span>
+                    <span class="chip-concepto">📸 2 imágenes en productos</span>
+                    <span class="chip-concepto">🎥 1 video en contacto</span>
+                    <span class="chip-concepto">🔊 (opcional) audio</span>
+                </div>
+                <p style="margin-top: 1rem;"><strong>Importante:</strong> Usa siempre la clase <code>img-fluida</code> en las imágenes para que se ajusten al contenedor.</p>
+            </div>
+
+            <!-- PUNTOS CLAVE Y EXPLICACIÓN -->
+            <div style="background: #eedacb; border-radius: 40px; padding: 1.8rem; margin: 2rem 0;">
+                <h3>🔑 Puntos clave para el éxito</h3>
+                <ol style="font-size: 1.2rem; line-height: 2; margin-left: 1.5rem;">
+                    <li><strong>MetaTag Viewport:</strong> Sin él, el sitio no es responsivo. Está en el <code>&lt;head&gt;</code>.</li>
+                    <li><strong>Flexbox + flex-wrap:</strong> En móvil, <code>flex-wrap: wrap</code> hace que los elementos se apilen. En escritorio, <code>nowrap</code> los coloca en fila.</li>
+                    <li><strong>Media Query:</strong> La regla <code>@media (min-width: 700px)</code> cambia la disposición para pantallas grandes.</li>
+                    <li><strong>Pruebas:</strong> Redimensiona el navegador o usa herramientas de desarrollador (F12) para simular móvil.</li>
+                    <li><strong>Tres páginas vinculadas:</strong> Verifica que los enlaces del menú funcionen entre <code>index.html</code>, <code>productos.html</code> y <code>contacto.html</code>.</li>
+                </ol>
+            </div>
+
+            <!-- REQUERIMIENTOS DE EVALUACIÓN (lista de cotejo) -->
+            <div style="background: #f7e3d6; border-radius: 40px; padding: 2rem; margin: 2.5rem 0;">
+                <h3 style="font-size: 2rem;">✅ Lista de Cotejo (Práctica 6)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 1.</strong> Página web creativa acorde a la microempresa</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 2.</strong> Menú con al menos 3 apartados (Inicio, Productos, Contacto)</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 3.</strong> Incluye datos de la empresa, misión, productos, etc.</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 4.</strong> Contiene al menos 5 elementos multimedia (imágenes/videos)</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 5.</strong> Hipervínculos funcionan correctamente (navegación entre páginas)</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 6.</strong> Codificación correcta de archivos .html y .css</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 7.</strong> Aplica diseño responsivo (viewport, flexbox, media queries)</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 8.</strong> El sitio se adapta a distintos dispositivos (smartphone, tablet, PC)</div>
+                    <div style="background: white; border-radius: 30px; padding: 1rem;"><strong>🔹 9.</strong> Entrega en tiempo y forma</div>
+                </div>
+                <p style="margin-top: 1.8rem; background: #d4ac8e; border-radius: 40px; padding: 0.8rem 1.5rem;"><strong>📊 Ponderación:</strong> 20% de la calificación total (práctica 6 + situación didáctica).</p>
+            </div>
+
+            <!-- BOTONES PARA COPIAR (individual y combo) -->
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin: 2.5rem 0;">
+                <button class="btn-copy big" data-target="codigo-html" style="background: #117a65;">📋 Copiar HTML base</button>
+                <button class="btn-copy big" data-target="codigo-css" style="background: #117a65;">🎨 Copiar CSS responsivo</button>
+                <button class="btn-copy big" id="copiarTodo" style="background: #b36843;">📋📋 COPIAR HTML + CSS</button>
+            </div>
+
+            <!-- TIPS FINALES -->
+            <div style="background: #ece1d6; border-radius: 50px; padding: 1.8rem;">
+                <h3>🧠 Tips para el éxito responsivo</h3>
+                <ul style="font-size: 1.15rem; line-height: 2;">
+                    <li>📱 Prueba en modo dispositivo: en Chrome, F12 → ícono de móvil.</li>
+                    <li>🖼️ Todas las imágenes deben tener <code>max-width: 100%</code> para que nunca sean más anchas que la pantalla.</li>
+                    <li>🔗 Antes de entregar, verifica que los enlaces del menú realmente abran las otras páginas.</li>
+                    <li>📂 Asegúrate de que la carpeta <code>img/</code> contenga las imágenes y estén bien nombradas.</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <!-- MENSAJE FINAL -->
+            <div style="text-align: center; background: #d5e6dc; padding: 2rem; border-radius: 80px; margin: 1.5rem 0;">
+                <p style="font-size: 1.3rem;">✨ Con esta práctica, tu sitio ya está listo para verse bien en cualquier dispositivo.</p>
+                <p style="font-size: 1.2rem;">¡El siguiente paso es publicarlo en InfinityFree (Práctica 7)!</p>
+            </div>
+        </div>
+
+        <div class="footer-perso">
+            📍 COBAEM 03 CHIMALHUACÁN · Docente José Huidobro Espejel · ciclo 2026A · Práctica 6 · Sitio Adaptable
+        </div>
+    </div>
+
+    <div class="copy-confirm" id="copyToast">¡Copiado al portapapeles! ✅</div>
+
+    <script>
+        (function() {
+            const toast = document.getElementById('copyToast');
+
+            function mostrarToast(mensaje = 'Copiado') {
+                toast.style.opacity = '1';
+                toast.style.transition = '0.2s';
+                setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+            }
+
+            function copiarTexto(elementoId) {
+                const elemento = document.getElementById(elementoId);
+                if (!elemento) return;
+                let texto = elemento.innerText || elemento.textContent;
+                navigator.clipboard.writeText(texto).then(() => {
+                    mostrarToast('✅ Código copiado');
+                }).catch(() => alert('No se pudo copiar, selecciona manualmente.'));
+            }
+
+            // Botones individuales
+            document.querySelectorAll('.btn-copy[data-target]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetId = btn.getAttribute('data-target');
+                    copiarTexto(targetId);
+                });
+            });
+
+            // Botón copiar todo (HTML + CSS)
+            document.getElementById('copiarTodo')?.addEventListener('click', () => {
+                const html = document.getElementById('codigo-html').innerText;
+                const css = document.getElementById('codigo-css').innerText;
+                const todo = "/* ===== index.html (BASE) ===== */\n\n" + html + "\n\n/* ===== reglas.css ===== */\n\n" + css;
+                navigator.clipboard.writeText(todo).then(() => {
+                    mostrarToast('✅ HTML + CSS copiados');
+                }).catch(() => alert('Error al copiar'));
+            });
+
+        })();
+    </script>
+</body>
+</html>
